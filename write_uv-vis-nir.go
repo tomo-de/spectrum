@@ -85,6 +85,10 @@ func (e *ExcelFile)NewFile(){
 
 // sheetを設定する
 func (e *ExcelFile)SetSheet(sheetName string){
+	// もしシートが存在しない場合はシートを作成
+	if e.file.GetSheetIndex(sheetName) == -1{
+		e.file.NewSheet(sheetName)
+	}
 	e.sheet = sheetName
 }
 
