@@ -26,7 +26,7 @@ func SetSpectraData(data_name string, wavelengths []float64, reflectances []floa
 		Reflectances: &reflectances,
 	}
 
-	data.checkPitch()
+    data.checkPitch()
 	return data
 }
 
