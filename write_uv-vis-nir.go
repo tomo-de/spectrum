@@ -9,6 +9,7 @@ import (
 type Writer interface{
 	WriteColumn(dataName string,data []float64, columnNumber int) error
 }
+
 type ExcelFile struct{
 	//ファイル名
 	fileName string
@@ -18,7 +19,7 @@ type ExcelFile struct{
 	sheet string
 }
 
-// 波長を読み込みexcelに書き出す
+// 波長を読み込みexcelに書き出す　(columnNumberは1-based indexing)
 func (u *UvVisNir) ExportWavelength(e Writer, columnNumber int)error{
 	wavelengths := *u.Wavelengths
 	if err := e.WriteColumn("波長", wavelengths, columnNumber); err != nil{
@@ -27,7 +28,7 @@ func (u *UvVisNir) ExportWavelength(e Writer, columnNumber int)error{
 	return nil
 }
 
-// 反射強度を読み込みexcelに書き出す
+// 反射強度を読み込みexcelに書き出す　(columnNumberは1-based indexing)
 func (u *UvVisNir) ExportReflectances(e ExcelFile, columnNumber int)error{
 	dataName := *u.DataName
 	reflectances := *u.Reflectances
