@@ -47,7 +47,7 @@ func (u *UvVisNir) checkPitch() error {
 		} else {
 			// 以降は検証用のピッチの比較する
 			pitch := n.Sub(v)
-			if validationPitch.Equal(pitch) {
+			if !validationPitch.Equal(pitch) {
 				return errors.New("pitchが一致しません")
 			}
 
