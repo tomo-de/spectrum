@@ -6,6 +6,7 @@ import (
 
 type Writer interface{
 	WriteColumn(dataName string,data []float64) error
+	SetColumn(column int)
 }
 type ExcelFile struct{
 	file *excelize.File
@@ -16,17 +17,22 @@ type ExcelFile struct{
 }
 
 // 波長を読み込みexcelに書き出す
-func (u *UvVisNir) ExportWavelength(e Writer){
+func (u *UvVisNir) ExportWavelength(e Writer, columnNumber int){
 	wavelengths := *u.Wavelengths
+	e.SetColumn(columnNumber)
 	e.WriteColumn("波長", wavelengths)
 }
 
 // 反射強度を読み込みexcelに書き出す
-func (u *UvVisNir) ExportReflectances(e ExcelFile){
+func (u *UvVisNir) ExportReflectances(e ExcelFile, columnNumber int){
 	dataName := *u.DataName
 	reflectances := *u.Reflectances
+	e.SetColumn(columnNumber)
 	e.WriteColumn(dataName, reflectances)
 }
+
+
+
 
 // 列をexcelに書き出す
 func (e ExcelFile)WriteColumn(dataName string, data []float64)error{
@@ -92,7 +98,16 @@ func (e *ExcelFile)SetSheet(sheetName string){
 	e.sheet = sheetName
 }
 
+// sheetを消す
+func(e ExcelFile)DeleteSheet(sheetName string){
+	//sheetNameのsheetを消す
+	e.file.DeleteSheet(sheetName)
+}
 // 列番号を設定する
-func(e *ExcelFile)SetColumn(Column int){
-	e.column = Column
+func(e ExcelFile)SetColumn(column int){
+	e.assignColumn(column)
+}
+
+func(e *ExcelFile)assignColumn(column int){
+	e.column = column
 }
