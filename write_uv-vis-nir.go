@@ -102,7 +102,7 @@ func (e *ExcelFile)OpenFile(filePath string) error {
 
 
 // 新しいファイルを作成する
-func (e *ExcelFile)NewFile(fileName string){
+func NewFile(fileName string)ExcelFile{
 	e.fileName = fileName
 	e.file = excelize.NewFile()
 }
