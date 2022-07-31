@@ -102,9 +102,18 @@ func (e *ExcelFile)OpenFile(filePath string) error {
 
 
 // 新しいファイルを作成する
-func NewFile(fileName string)ExcelFile{
-	e.fileName = fileName
-	e.file = excelize.NewFile()
+func NewFile(fileName string, sheetName string)ExcelFile{
+	f := ExcelFile{
+		fileName: fileName,
+		file:     excelize.NewFile(),
+		sheet:    sheetName,
+	}
+	// sheetNameがSheet1でないとき
+	if sheetName!="Sheet1"{
+		f.file.NewSheet(sheetName)
+		f.file.DeleteSheet("Sheet1")
+	}
+	return f
 }
 
 // sheetを設定する

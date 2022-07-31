@@ -10,13 +10,9 @@ func TestSpectrum(t *testing.T) {
 	fmt.Println(a.GetSpectrumData())
     
     
-    var f ExcelFile
-    f.NewFile()
-    f.SetSheet("Sheet1")
-    f.SetColumn(2)
-    a.ExportWavelength(f)
-    f.SetColumn(3)
-    a.ExportReflectances(f)
+    f := NewFile("aba", "asd")
+    t.Log(a.ExportWavelength(f, 1))
+    a.ExportReflectances(f, 2)
     fmt.Println(f)
    
     
